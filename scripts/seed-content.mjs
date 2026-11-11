@@ -516,6 +516,40 @@ const ENTRIES = [
       { title: "SiliconFlow — FAQ rate limits", url: "https://docs.siliconflow.com/en/faqs/misc_rate" },
     ],
   },
+  // Sumber resmi agent-qa diperiksa 11 November 2026; diajukan untuk tinjauan pengelola.
+  {
+    "slug": "agent-qa-pengujian-web-mobile",
+    "title": "agent-qa — pengujian web/mobile dengan memori memidex",
+    "category": "tool-ai-gratis",
+    "accessType": "tool",
+    "provider": "vostride",
+    "summary": "QA web dan mobile lewat CLI/MCP, memori memidex persisten, perbaikan diri tervalidasi, serta bukti langkah dan tangkapan layar.",
+    "description": "agent-qa membantu pengujian regresi aplikasi web, Android, dan iOS melalui tes berbahasa alami. CLI dan MCP menyediakan memori memidex persisten, perbaikan diri tervalidasi, serta catatan langkah dan tangkapan layar untuk meninjau hasil.\n\nPerangkat lunak lokal gratis untuk penggunaan yang diizinkan; lisensi FSL-1.1-ALv2 membatasi penggunaan yang bersaing. Biaya penyedia/model AI, komputasi, browser/perangkat, CI, penyimpanan, dan infrastruktur opsional terpisah. Membutuhkan Node.js 24+ serta model dan target pengujian yang sudah dikonfigurasi. Sumber harga dan lisensi diperiksa pada 11 November 2026.",
+    "freeTier": "Perangkat lunak lokal gratis untuk penggunaan yang diizinkan; biaya model dan perangkat/komputasi terpisah.",
+    "freeTierAvailable": true,
+    "requiresCard": false,
+    "contextWindow": null,
+    "requirements": "Node.js 24+, konfigurasi model AI, dan lingkungan browser/perangkat target. Akun, kunci, kartu pembayaran, serta ketersediaan layanan model mengikuti penyedia yang dipilih.",
+    "integrationNotes": "MCP stdio: npx agent-qa mcp. Siapkan model dan target sesuai dokumentasi resmi; biaya layanan eksternal terpisah. Situs utama: https://vostride.com.",
+    "sources": [
+      {
+        "title": "agent-qa oleh vostride — situs resmi",
+        "url": "https://vostride.com"
+      },
+      {
+        "title": "vostride — harga dan biaya penggunaan lokal",
+        "url": "https://vostride.com/pricing.md"
+      },
+      {
+        "title": "agent-qa — dokumentasi MCP",
+        "url": "https://vostride.com/docs/agent-qa/mcp.md"
+      },
+      {
+        "title": "agent-qa — FSL-1.1-ALv2 dan batas penggunaan",
+        "url": "https://github.com/vostride/agent-qa/blob/43618211636159a6fc6086cac90101e448ed8a63/LICENSE.md"
+      }
+    ]
+  },
 ];
 
 /**

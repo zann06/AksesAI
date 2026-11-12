@@ -1,5 +1,9 @@
 # AksesAI
 
+**Direktori info gratis & murah seputar AI, dari komunitas, dengan sumber yang bisa diperiksa.**
+
+### 🔗 [aksesai-id.vercel.app](https://aksesai-id.vercel.app)
+
 [![CI](https://github.com/zann06/AksesAI/actions/workflows/ci.yml/badge.svg)](https://github.com/zann06/AksesAI/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
@@ -7,11 +11,10 @@
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e)](https://supabase.com)
 [![RLS](https://img.shields.io/badge/RLS-aktif-brightgreen)](supabase/migrations)
 
-**Direktori info gratis & murah seputar AI, dari komunitas, dengan sumber yang bisa diperiksa.**
-
 API/token gratis, free tier, harga per token, model open-weight, tool gratis, dan hosting gratis — setiap entri wajib punya minimal satu sumber resmi dan diverifikasi manual oleh manusia sebelum terbit.
 
 <p>
+  <a href="https://aksesai-id.vercel.app"><b>🌐 Buka situs</b></a> ·
   <a href="#-mulai-cepat"><b>Mulai cepat</b></a> ·
   <a href="#-fitur"><b>Fitur</b></a> ·
   <a href="CONTRIBUTING.md"><b>Kontribusi</b></a> ·

@@ -46,6 +46,21 @@ updates:
         update-types:
           - "version-update:semver-major"
           - "version-update:semver-minor"
+      # `typescript` 6.x mengubah perilaku pemeriksaan tipe. Karena TS hanya
+      # dipakai saat typecheck & build (bukan runtime), upgrade ini murni
+      # pekerjaan migrasi: butuh memperbaiki error tipe di banyak berkas dan
+      # memverifikasi ulang seluruh build. Belum ada dorongan keamanan
+      # (repo ini 0 security alert). PR #6 ditutup dengan alasan ini.
+      # Untuk mengupgrade: hapus blok ini, lalu jalankan upgrade dan perbaiki
+      # sampai `pnpm typecheck` bersih.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      # `jsdom` 31.x juga major. Hanya dipakai lingkungan tes, tidak pernah
+      # masuk bundel produksi, sehingga dampaknya ke pengguna nol. PR #7
+      # ditutup dengan alasan ini. Sama seperti di atas: hapus blok untuk
+      # mengupgrade, lalu pastikan seluruh tes DOM lulus.
+      - dependency-name: "jsdom"
+        update-types: ["version-update:semver-major"]
     groups:
       # Semua yang minor/patch digabung agar review-nya sekali jalan.
       npm-minor-patch:

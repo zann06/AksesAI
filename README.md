@@ -496,6 +496,6 @@ Dirilis di bawah [MIT License](LICENSE).
 
 <div align="center">
 
-© 2026 AksesAI. Dibuat oleh organisasi **[MIKOS](https://github.com/Mikost-Code)**.
+© 2026 AksesAI. Dibuat oleh **[zann06](https://github.com/zann06)** bersama organisasi **[MIKOS](https://github.com/Mikost-Code)**.
 
 </div>

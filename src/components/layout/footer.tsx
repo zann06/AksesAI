@@ -62,13 +62,33 @@ export function Footer() {
         <div className="mx-auto max-w-[1200px] px-4 py-6 text-xs text-muted-foreground sm:px-6 lg:px-8">
           <p>{PLATFORM_DISCLAIMER_SHORT}</p>
           {/*
-           * Kredit berupa teks biasa, bukan tautan: belum ada URL resmi
-           * organisasi MIKOS yang bisa dipastikan, dan menautkan ke tebakan
-           * akan menghasilkan tautan salah. Tambahkan tautan di sini setelah
-           * alamat resminya diketahui.
+           * Kredit menyebut DUA pihak karena keduanya memang berperan dan
+           * keduanya perlu tercatat:
+           *  - `zann06` adalah pemilik repo kanonis (zann06/AksesAI) sekaligus
+           *    pemegang hak cipta dan super admin — ini yang bersifat legal.
+           *  - MIKOS adalah organisasi yang terlibat lewat fork
+           *    (Mikost-Code/AksesAI); menyebutnya mengakui kontribusinya tanpa
+           *    memindahkan kepemilikan proyek.
+           *
+           * Urutannya sengaja: pemilik lebih dulu, organisasi menyusul. Bila
+           * dibalik, pembaca akan menyimpulkan MIKOS yang memiliki proyek.
+           *
+           * `zann06` ditautkan ke profil GitHub karena itu satu-satunya alamat
+           * resminya yang bisa dipastikan. MIKOS tetap teks biasa: belum ada
+           * URL resmi organisasi yang dapat diverifikasi, dan menautkan ke
+           * tebakan akan menghasilkan tautan salah.
            */}
           <p className="mt-2">
-            © {new Date().getFullYear()} {APP_NAME}. Dibuat oleh organisasi MIKOS.
+            © {new Date().getFullYear()} {APP_NAME}. Dibuat oleh{" "}
+            <a
+              href="https://github.com/zann06"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-border underline-offset-2 hover:text-foreground hover:decoration-current"
+            >
+              zann06
+            </a>{" "}
+            bersama organisasi MIKOS.
           </p>
         </div>
       </div>

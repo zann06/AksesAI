@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { clientEnv } from "@/lib/env";
 import { serializeJsonLd } from "@/lib/security/json-ld";
 import { APP_NAME, DEFAULT_DISCLAIMER_TEXT } from "@/lib/constants/labels";
-import { getDirectoryStats, getTopContributors } from "@/lib/programs/seo";
+import { getDirectoryStats, getTopContributors, TOP_CONTRIBUTORS_LIMIT } from "@/lib/programs/seo";
 import Image from "next/image";
 
 export const metadata = {
@@ -93,7 +93,7 @@ export default async function HomePage() {
     },
   };
 
-  const topContributors = await getTopContributors(3);
+  const topContributors = await getTopContributors(TOP_CONTRIBUTORS_LIMIT);
   const stats = await getDirectoryStats();
 
   return (
@@ -189,7 +189,21 @@ export default async function HomePage() {
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <ul className="animate-stagger mt-4 grid gap-3 sm:grid-cols-3">
+          {/*
+           * Selalu 2 kolom — sengaja TIDAK ada breakpoint 3 kolom.
+           *
+           * Dengan batas 9 kontributor, jumlah yang tampil jarang kelipatan 3
+           * (saat direktori masih baru hanya 4 orang). Grid 3 kolom lalu
+           * menyisakan kartu sendirian dengan dua slot kosong di kanannya, dan
+           * itu terbaca sebagai layout rusak — bukan sebagai "belum banyak
+           * kontributor". Dua kolom selalu rapi untuk jumlah genap, dan untuk
+           * jumlah ganjil hanya menyisakan satu slot.
+           *
+           * Kartu ini juga tidak butuh lebar 370px hanya untuk avatar 44px +
+           * satu baris teks; 2 kolom di layar lebar justru membuat teks
+           * seimbang, bukan renggang.
+           */}
+          <ul className="animate-stagger mt-4 grid gap-3 sm:grid-cols-2">
             {topContributors.map(({ username, avatarUrl, contributionCount }) => (
               <li key={username}>
                 <Link

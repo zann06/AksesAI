@@ -5,6 +5,14 @@ import { unstable_cache } from "next/cache";
 import { isSupabaseConfigured } from "@/lib/env";
 import { createSupabaseAnonClient } from "@/lib/supabase/server";
 import { TAG_PROGRAMS_PUBLIC } from "@/lib/cache-tags";
+import {
+  rankTopContributors,
+  TOP_CONTRIBUTORS_LIMIT,
+  type RawTopContributorRow,
+  type TopContributor,
+} from "./seo-rank";
+
+export { TOP_CONTRIBUTORS_LIMIT, type TopContributor };
 
 /**
  * Data pendukung SEO: sitemap, gambar Open Graph, dan bukti sosial.
@@ -73,53 +81,47 @@ export const getProgramForOg = unstable_cache(
   { revalidate: 300, tags: [TAG_PROGRAMS_PUBLIC] },
 );
 
-export type TopContributor = {
-  username: string;
-  avatarUrl: string | null;
-  contributionCount: number;
-};
-
 /**
  * Kontributor paling aktif berdasarkan entri publik (verified/expired).
  * Mengembalikan array kosong bila DB tidak dikonfigurasi / kosong.
+ *
+ * Definisi "terverifikasi" di sini sengaja SAMA dengan halaman
+ * `/kontributor/[username]` (`./contributors.ts`): `verified` + `expired`.
+ * Sebelumnya beranda hanya menghitung `verified`, sehingga angka di beranda dan
+ * angka di halaman profil orang yang sama bisa berbeda — entri yang promonya
+ * sudah lewat tetap kontribusi yang sah.
+ *
+ * Pengurutan & pemotongan tinggal di `./seo-rank` agar dapat diuji tanpa
+ * memuat `server-only` / koneksi database.
  */
 export const getTopContributors = unstable_cache(
-  async (limit = 3): Promise<TopContributor[]> => {
+  async (limit: number = TOP_CONTRIBUTORS_LIMIT): Promise<TopContributor[]> => {
     if (!isSupabaseConfigured()) return [];
 
     const supabase = createSupabaseAnonClient();
     // profiles punya DUA FK ke assistance_programs (contributor & reviewer),
     // jadi nama relasi wajib eksplisit agar PostgREST tidak ambigu.
+    //
+    // Batas 200 dihapus: `.limit()` di sini berlaku pada baris yang BELUM
+    // terurut (PostgREST menghitung agregat lalu memotong), sehingga begitu
+    // profil melewati 200, kontributor paling aktif bisa terbuang secara acak.
+    // Yang perlu dibatasi adalah hasil di memori (`rankTopContributors`), bukan
+    // baris mentahnya.
     const { data, error } = await supabase
       .from("profiles")
       .select(
         "github_username, github_avatar, assistance_programs!assistance_programs_contributor_id_fkey!inner(count)",
       )
-      .eq("assistance_programs.status", "verified")
-      .limit(200);
+      .in("assistance_programs.status", ["verified", "expired"]);
 
     if (error) {
       console.error("[seo] Top kontributor gagal:", error.message);
       return [];
     }
 
-    return (
-      ((data ?? []) as Array<{
-        github_username: string;
-        github_avatar: string | null;
-        assistance_programs: Array<{ count: number }>;
-      }>)
-        .map((row) => ({
-          username: row.github_username,
-          avatarUrl: row.github_avatar,
-          contributionCount: row.assistance_programs[0]?.count ?? 0,
-        }))
-        .filter((row) => row.contributionCount > 0)
-        .sort((a, b) => b.contributionCount - a.contributionCount)
-        .slice(0, limit)
-    );
+    return rankTopContributors((data ?? []) as RawTopContributorRow[], limit);
   },
-  ["seo-top-contributors"],
+  ["seo-top-contributors", String(TOP_CONTRIBUTORS_LIMIT)],
   { revalidate: 300, tags: [TAG_PROGRAMS_PUBLIC] },
 );
 

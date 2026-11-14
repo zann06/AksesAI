@@ -1,8 +1,12 @@
+<div align="center">
+
+<img src="src/app/icon.svg" alt="Logo AksesAI" width="112" height="112">
+
 # AksesAI
 
 **Direktori info gratis & murah seputar AI, dari komunitas, dengan sumber yang bisa diperiksa.**
 
-### 🔗 [aksesai-id.vercel.app](https://aksesai-id.vercel.app)
+[aksesai-id.vercel.app](https://aksesai-id.vercel.app)
 
 [![CI](https://github.com/zann06/AksesAI/actions/workflows/ci.yml/badge.svg)](https://github.com/zann06/AksesAI/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -13,14 +17,14 @@
 
 API/token gratis, free tier, harga per token, model open-weight, tool gratis, dan hosting gratis — setiap entri wajib punya minimal satu sumber resmi dan diverifikasi manual oleh manusia sebelum terbit.
 
-<p>
-  <a href="https://aksesai-id.vercel.app"><b>🌐 Buka situs</b></a> ·
-  <a href="#-mulai-cepat"><b>Mulai cepat</b></a> ·
-  <a href="#-fitur"><b>Fitur</b></a> ·
-  <a href="CONTRIBUTING.md"><b>Kontribusi</b></a> ·
-  <a href="#-kebijakan-entri-katalog"><b>Aturan katalog</b></a> ·
-  <a href="SECURITY.md"><b>Keamanan</b></a>
-</p>
+[**Buka situs**](https://aksesai-id.vercel.app) ·
+[**Mulai cepat**](#mulai-cepat) ·
+[**Fitur**](#fitur) ·
+[**Kontribusi**](CONTRIBUTING.md) ·
+[**Aturan katalog**](#kebijakan-entri-katalog) ·
+[**Keamanan**](SECURITY.md)
+
+</div>
 
 > **AksesAI bukan afiliasi provider AI mana pun**, tidak menjual token, dan tidak menjamin kuota gratis atau harga masih tersedia. Status _Terverifikasi_ berarti info telah diperiksa reviewer terhadap dokumentasi resmi provider **pada saat peninjauan** — kuota, harga, dan promo dapat berubah sewaktu-waktu.
 
@@ -28,7 +32,7 @@ API/token gratis, free tier, harga per token, model open-weight, tool gratis, da
 
 ---
 
-## 🚀 Mulai Cepat
+## Mulai Cepat
 
 ```bash
 git clone https://github.com/zann06/AksesAI.git
@@ -57,7 +61,7 @@ Studio: <http://127.0.0.1:54323> · Penampung email lokal (Mailpit): <http://127
 
 ---
 
-## ✨ Fitur
+## Fitur
 
 <table>
 <tr><th width="140">Peran</th><th>Kemampuan</th></tr>
@@ -120,7 +124,7 @@ Studio: <http://127.0.0.1:54323> · Penampung email lokal (Mailpit): <http://127
 
 ---
 
-## 🔐 Keamanan
+## Keamanan
 
 | Lapisan | Penerapan |
 |---|---|
@@ -141,7 +145,7 @@ Laporkan kerentanan **secara privat** lewat [GitHub Security Advisory](https://g
 
 ---
 
-## 🧱 Tech Stack
+## Tech Stack
 
 | Lapisan | Teknologi |
 |---|---|
@@ -194,7 +198,7 @@ node -e "console.log(require('crypto').randomBytes(24).toString('hex'))"   # IP_
 
 ---
 
-## 🗄️ Database & Migrasi
+## Database & Migrasi
 
 **Skema database dipublikasikan di repo ini.** Folder `supabase/` berisi `config.toml`, seluruh migrasi (`supabase/migrations/`), dan `seed.sql`. Ini disengaja:
 
@@ -246,7 +250,7 @@ npx supabase@2.120.0 db push
 
 ---
 
-## 🔑 Setup GitHub OAuth
+## Setup GitHub OAuth
 
 1. GitHub → **Settings** → **Developer settings** → **OAuth Apps** → **New OAuth App**.
 2. Isi:
@@ -296,7 +300,7 @@ Staf lain (reviewer/moderator/admin) dikelola lewat `/admin/pengguna` sebagai pe
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ```bash
 pnpm test                               # unit (validasi Zod, slug, sanitasi, SSRF, sensitive-scan)
@@ -342,7 +346,7 @@ Semua skrip memerlukan `.env.local` terisi dan server berjalan.
 
 ---
 
-## 📦 Build & Deploy
+## Build & Deploy
 
 ```bash
 pnpm build
@@ -392,7 +396,7 @@ Hasilnya ditulis ke `supabase/backups/*.sql` dan **diabaikan git** — file itu 
 
 ---
 
-## 🗂️ Struktur Repo
+## Struktur Repo
 
 ```text
 AksesAI/
@@ -422,7 +426,7 @@ AksesAI/
 
 ---
 
-## 🤝 Kontribusi
+## Kontribusi
 
 Kami menerima kontribusi kode, perbaikan data katalog, dan laporan bug. Panduan lengkap ada di [CONTRIBUTING.md](CONTRIBUTING.md); ringkasnya:
 
@@ -456,7 +460,7 @@ Proyek ini memakai [Contributor Covenant](CODE_OF_CONDUCT.md). Dengan berpartisi
 
 ---
 
-## 📋 Kebijakan Entri Katalog
+## Kebijakan Entri Katalog
 
 Aturan yang tidak boleh dilanggar saat menambah atau memperbarui entri:
 
@@ -470,11 +474,11 @@ Pelanggaran aturan di atas akan ditolak reviewer. Ragu? Tanya lewat issue.
 
 ---
 
-## 🕵️ Privasi & Data yang Tidak Dikumpulkan
+## Privasi & Data yang Tidak Dikumpulkan
 
 AksesAI **secara sengaja tidak mengumpulkan**:
 
-| ❌ Tidak dikumpulkan | ❌ Tidak dikumpulkan |
+| Tidak dikumpulkan | Tidak dikumpulkan |
 |---|---|
 | NIK (Nomor Induk Kependudukan) | Nomor rekening / kartu |
 | Nomor Kartu Keluarga (KK) | Identitas penerima bantuan atau daftar penerima |
@@ -488,7 +492,7 @@ Rincian lengkap: halaman `/kebijakan-privasi`.
 
 ---
 
-## 📄 Lisensi
+## Lisensi
 
 Dirilis di bawah [MIT License](LICENSE).
 

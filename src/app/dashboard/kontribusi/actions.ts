@@ -28,7 +28,7 @@ import {
 import { checkRateLimitWithFallback } from "@/lib/security/rate-limit-server";
 import { RATE_LIMITS } from "@/lib/security/rate-limit";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { slugify } from "@/lib/slug";
+import { buildSlugBase } from "@/lib/slug";
 
 export type ActionResult =
   | { ok: true; message?: string; programId?: string; slug?: string }
@@ -42,8 +42,7 @@ function uuidSuffix(): string {
 }
 
 function buildSlug(title: string): string {
-  const base = slugify(title).slice(0, 80) || "entri";
-  return `${base}-${uuidSuffix()}`;
+  return `${buildSlugBase(title)}-${uuidSuffix()}`;
 }
 
 function fieldErrorsFrom(

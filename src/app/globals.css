@@ -43,6 +43,13 @@
   --color-accent-hover: #036b4d;
   --color-accent-soft: #e4f7ed;
 
+  /*
+   * Blok seleksi teks. Bukan warna brand: dipilih agar blok terlihat di latar
+   * terang maupun di band hijau hutan, tanpa mengorbankan keterbacaan teks.
+   * Lihat blok `::selection` di @layer base untuk angka kontrasnya.
+   */
+  --color-selection: #4a928c;
+
   /* Tint hangat untuk diferensiasi kartu kategori */
   --color-warm: #b45309;
   --color-warm-soft: #fef4e6;
@@ -198,9 +205,57 @@
     scroll-padding-top: 5rem;
   }
 
-  /* Seleksi teks memakai tint brand agar terasa menyatu. */
+  /*
+   * Seleksi teks.
+   *
+   * Blok seleksi harus terlihat terhadap latar di belakangnya. Situs ini punya
+   * tiga keluarga latar, dan satu warna tidak cukup untuk semuanya:
+   *
+   *  1. Terang — background #fffefa, surface #f7f4ec, muted #f1ede1.
+   *  2. Gelap — band .hero-forest (#1f3d2b / #16301f).
+   *  3. Berwarna pekat — tombol primary, accent, danger, cream.
+   *
+   * Angka di bawah adalah rasio blok seleksi terhadap latar (WCAG 2.1).
+   * Ambang komponen non-teks 1.4.11 = 3:1, teks = 4.5:1.
+   *
+   *   Lapis 1 (global, teal #4a928c, teks #101a12)
+   *     background 3.60 · surface 3.30 · muted 3.10 · subtle 3.19
+   *     forest 3.28 · forest-deep 3.92 · teks 4.91
+   *   Lapis 2 (.hero-forest, sand #e8dcc4, teks #16301f)
+   *     forest 8.78 · forest-deep 10.47 · teks 10.47
+   *   Lapis 3 (tombol pekat, sand #e8dcc4, teks #16301f)
+   *     primary 4.50 · accent 4.04 · danger 4.84 · teks 10.47
+   *   Lapis 4 (tombol cream, forest-deep #16301f, teks putih)
+   *     sand 10.47 · sand-bright 12.08 · teks 14.22
+   *
+   * Teks di dalam blok harus tetap gelap (#101a12, 4.91:1). Teks putih di atas
+   * blok teal hanya 3.63:1 sehingga gagal ambang 4.5:1 — jangan ditukar.
+   */
   ::selection {
-    background-color: var(--color-primary);
+    background-color: var(--color-selection);
+    color: var(--color-foreground);
+  }
+
+  .hero-forest ::selection {
+    background-color: var(--color-sand);
+    color: var(--color-forest-deep);
+  }
+
+  /*
+   * Tombol berlatar pekat: blok teal global nyaris menyatu dengan latar
+   * (primary 1.68:1, danger 1.81:1), jadi blok seleksi dibuat sand.
+   * Dibatasi ke tombol/link ber-`bg-*` agar tidak menimpa lapis 1 dan 2.
+   */
+  .bg-primary::selection,
+  .bg-accent::selection,
+  .bg-danger::selection {
+    background-color: var(--color-sand);
+    color: var(--color-forest-deep);
+  }
+
+  /* Tombol cream berlatar terang, jadi blok seleksi dibuat gelap. */
+  .bg-sand::selection {
+    background-color: var(--color-forest-deep);
     color: var(--color-primary-foreground);
   }
 

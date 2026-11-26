@@ -200,8 +200,8 @@
 
   /* Seleksi teks memakai tint brand agar terasa menyatu. */
   ::selection {
-    background-color: var(--color-primary-soft);
-    color: var(--color-foreground);
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
   }
 
   /* Scrollbar ramping menyatu dengan tema (fallback standar + Chromium). */

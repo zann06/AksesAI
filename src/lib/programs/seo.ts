@@ -82,6 +82,45 @@ export const getProgramForOg = unstable_cache(
 );
 
 /**
+ * Username kontributor yang punya minimal satu entri publik, untuk sitemap.
+ *
+ * Sebelumnya halaman `/kontributor/<nama>` tidak pernah masuk sitemap sama
+ * sekali, padahal halaman itu publik dan punya metadata sendiri. Akibatnya
+ * Google hanya menemukannya lewat tautan (dan tautan itu pun baru ada setelah
+ * kontributor masuk daftar "paling aktif" di beranda).
+ *
+ * Definisi "punya entri publik" disamakan dengan `getContributor`
+ * (`verified` + `expired`) agar sitemap tidak mengirim URL yang berujung 404.
+ * Username yang sudah dihapus (`is_deleted`) tetap disaring oleh RLS profil.
+ */
+export const listPublicContributorPaths = unstable_cache(
+  async (): Promise<string[]> => {
+    if (!isSupabaseConfigured()) return [];
+
+    const supabase = createSupabaseAnonClient();
+    const { data, error } = await supabase
+      .from("profiles")
+      .select(
+        "github_username, assistance_programs!assistance_programs_contributor_id_fkey!inner(status)",
+      )
+      .in("assistance_programs.status", ["verified", "expired"]);
+
+    if (error) {
+      console.error("[seo] Daftar kontributor gagal:", error.message);
+      return [];
+    }
+
+    const names = new Set<string>();
+    for (const row of (data ?? []) as Array<{ github_username: string | null }>) {
+      if (row.github_username) names.add(row.github_username);
+    }
+    return [...names].sort();
+  },
+  ["seo-contributor-paths"],
+  { revalidate: 300, tags: [TAG_PROGRAMS_PUBLIC] },
+);
+
+/**
  * Kontributor paling aktif berdasarkan entri publik (verified/expired).
  * Mengembalikan array kosong bila DB tidak dikonfigurasi / kosong.
  *

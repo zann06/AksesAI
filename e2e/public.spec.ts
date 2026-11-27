@@ -46,11 +46,19 @@ test.describe("Halaman publik", () => {
   });
 
   /**
-   * Next.js 16 mengalirkan kerangka halaman (status 200) sebelum komponen async
-   * selesai, jadi memastikan lewat status HTTP tidak dapat diandalkan untuk
-   * `notFound()` di dalam halaman yang melakukan fetch. Yang benar-benar
-   * penting bagi pengguna adalah UI 404 yang tampil dan halaman tidak
-   * diindeks mesin pencari.
+   * Status HTTP TIDAK dapat diandalkan untuk `notFound()` di sini, dan itu
+   * disengaja.
+   *
+   * Penyebabnya `loading.tsx` (skeleton). Next.js 16 mulai mengalirkan respons
+   * begitu boundary Suspense terdekat siap, jadi status 200 sudah terkirim
+   * sebelum `notFound()` dievaluasi di dalam halaman. Memindahkan `notFound()`
+   * ke `generateMetadata` pun tidak menolong. Satu-satunya cara mendapatkan 404
+   * sungguhan adalah menghapus skeleton — dan skeleton itulah yang membuat
+   * navigasi tidak terasa kosong. Tradeoff-nya diambil ke arah UX.
+   *
+   * Yang penting bagi mesin pencari tetap terpenuhi: UI 404 tampil, halaman
+   * ditandai `noindex`, dan tidak ada canonical yang menunjuk ke slug palsu.
+   * Google membuang halaman `noindex` terlepas dari status HTTP-nya.
    */
   test("slug info tak dikenal → UI 404 & noindex", async ({ page }) => {
     await page.goto("/info/tidak-ada-info-ini-xyz");

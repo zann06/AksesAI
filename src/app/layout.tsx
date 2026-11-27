@@ -45,11 +45,15 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  alternates: {
-    // Satu URL kanonik per halaman. Domain alternatif (mis. alias deployment
-    // Vercel) tidak boleh terindeks ganda agar tidak terjadi konten duplikat.
-    canonical: "/",
-  },
+  // Sengaja TIDAK ada `alternates.canonical` di sini.
+  //
+  // Nilai di root layout diwarisi oleh setiap halaman yang tidak menimpanya.
+  // Saat dulu diisi `canonical: "/"`, seluruh halaman publik (/info, /kategori,
+  // /panduan, /kontributor) mendeklarasikan dirinya sebagai duplikat beranda
+  // sehingga dibuang Google dari indeks. Setiap halaman kini memakai
+  // `canonicalUrl()` dari `@/lib/seo` untuk menyebut URL-nya sendiri.
+  // `metadataBase` di bawah tetap dipertahankan agar URL relatif (mis. gambar
+  // Open Graph) tetap diresolusi absolut.
 };
 
 export const viewport: Viewport = {

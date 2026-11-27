@@ -1,11 +1,19 @@
 import type { MetadataRoute } from "next";
 
 import { clientEnv } from "@/lib/env";
-import { listPublicProgramPaths } from "@/lib/programs/seo";
+import { getCategories } from "@/lib/programs/categories";
+import { listPublicContributorPaths, listPublicProgramPaths } from "@/lib/programs/seo";
 
 /**
- * Sitemap: rute statis + seluruh entri publik (verified/expired).
- * Query DB dibungkus cache 5 menit; bila DB tidak siap, sitemap tetap
+ * Sitemap: rute statis + seluruh entri publik (verified/expired) + halaman
+ * kategori + halaman kontributor.
+ *
+ * Dua kelompok terakhir sebelumnya TIDAK pernah masuk sitemap, padahal
+ * keduanya rute publik yang punya metadata sendiri dan isi yang layak
+ * diindeks. Akibatnya Google hanya menemukan halaman kategori/kontributor
+ * lewat tautan internal yang belum tentu ada.
+ *
+ * Semua query dibungkus cache 5 menit; bila DB tidak siap, sitemap tetap
  * terbit dengan rute statis saja (tidak pernah gagal permintaan crawler).
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -35,6 +43,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: updatedAt ? new Date(updatedAt) : now,
       changeFrequency: "weekly",
       priority: 0.8,
+    });
+  }
+
+  // Kategori: halaman pengelompokan yang mengumpulkan entri sejenis.
+  // Prioritas lebih rendah dari entri karena isinya berubah mengikuti entri.
+  const categories = await getCategories();
+  for (const category of categories) {
+    entries.push({
+      url: `${site}/kategori/${encodeURIComponent(category.slug)}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    });
+  }
+
+  // Profil kontributor: hanya yang punya minimal satu entri publik, agar
+  // sitemap tidak mengirim URL yang berujung 404.
+  const usernames = await listPublicContributorPaths();
+  for (const username of usernames) {
+    entries.push({
+      url: `${site}/kontributor/${encodeURIComponent(username)}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.4,
     });
   }
 

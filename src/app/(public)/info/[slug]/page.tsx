@@ -92,10 +92,10 @@ async function fetchFeedbackCounts(programId: string): Promise<{
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  if (!SLUG_PATTERN.test(slug)) return { title: "Info tidak ditemukan" };
+  if (!SLUG_PATTERN.test(slug)) notFound();
 
   const program = await getProgramDetail(slug);
-  if (!program) return { title: "Info tidak ditemukan", robots: { index: false } };
+  if (!program) notFound();
 
   const site = clientEnv().NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   const description = program.description.replace(/\s+/g, " ").slice(0, 160);

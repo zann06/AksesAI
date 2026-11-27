@@ -12,11 +12,13 @@ import {
 } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Tentang",
   description:
     "AksesAI adalah direktori info gratis & murah seputar AI berbasis kontribusi komunitas. Kami bukan afiliasi provider AI mana pun dan tidak menjual token.",
+  alternates: { canonical: canonicalUrl("/tentang") },
 };
 
 const VALUE_POINTS = [

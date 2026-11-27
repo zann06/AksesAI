@@ -11,11 +11,13 @@ import {
 } from "lucide-react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { canonicalUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Panduan",
   description:
     "Cara mencari info AI gratis & murah, cara berkontribusi dengan sumber yang baik, dan cara melaporkan info bermasalah di AksesAI.",
+  alternates: { canonical: canonicalUrl("/panduan") },
 };
 
 /** Langkah bernomor — dipakai di kartu "Mencari info" & "Berkontribusi". */

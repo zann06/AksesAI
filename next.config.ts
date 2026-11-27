@@ -56,6 +56,21 @@ const securityHeaders = [
     key: "Permissions-Policy",
     value: "camera=(), microphone=(), geolocation=(), payment=()",
   },
+  // --- Isolasi proses (defense-in-depth) ---
+  //
+  // COOP `same-origin` memutus akses `window.opener` dari tab lain, sehingga
+  // halaman ini tidak bisa dipakai sebagai "topeng" untuk mengendalikan tab
+  // korban (tab-nabbing). Aman untuk alur login di repo ini karena
+  // `/auth/sign-in` memakai redirect 303 di tab yang sama, bukan popup —
+  // popup-lah yang bergantung pada `window.opener`.
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+  // CORP mencegah sumber daya kita (HTML, gambar, JSON) dipakai silang-origin
+  // oleh situs lain, mis. gambar avatar atau respons API yang ditempel ke
+  // halaman penyerang.
+  { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+  // Menutup jalur lama Flash/PDF yang membaca kebijakan cross-domain.
+  { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
+  { key: "X-DNS-Prefetch-Control", value: "on" },
 ];
 
 const nextConfig: NextConfig = {

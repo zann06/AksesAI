@@ -11,12 +11,16 @@ import { serializeJsonLd } from "@/lib/security/json-ld";
 import { PAGE_SIZE, PLATFORM_DISCLAIMER_SHORT } from "@/lib/constants/labels";
 import { getCategories } from "@/lib/programs/categories";
 import { getDirectory } from "@/lib/programs/queries";
+import { canonicalUrl } from "@/lib/seo";
 import { parseDirectorySearch } from "@/lib/validation/search";
 
 export const metadata: Metadata = {
   title: "Direktori info AI gratis & murah",
   description:
     "Cari dan filter info AI gratis/murah: API & token gratis, free tier, harga per token, model open-weight, tool gratis, dan hosting gratis.",
+  // Kanonik menunjuk ke /info tanpa parameter: hasil filter (?kategori=...,
+  // ?q=...) adalah variasi dari halaman yang sama, bukan halaman terpisah.
+  alternates: { canonical: canonicalUrl("/info") },
 };
 
 export const revalidate = 300;

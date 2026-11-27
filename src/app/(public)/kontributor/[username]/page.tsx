@@ -8,6 +8,7 @@ import { ProgramCard } from "@/components/program-card";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getContributor } from "@/lib/programs/contributors";
+import { canonicalUrl } from "@/lib/seo";
 import { formatDateID } from "@/lib/utils";
 
 const USERNAME_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/;
@@ -24,6 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Kontributor ${profile.username}`,
     description: `Profil publik ${profile.username}: ${profile.totalVerified} info AI gratis & murah terverifikasi di AksesAI.`,
+    alternates: { canonical: canonicalUrl(`/kontributor/${profile.username}`) },
   };
 }
 

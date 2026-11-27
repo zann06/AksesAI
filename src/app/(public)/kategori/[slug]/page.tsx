@@ -6,6 +6,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ProgramCard } from "@/components/program-card";
 import { getCategories } from "@/lib/programs/categories";
 import { getDirectory } from "@/lib/programs/queries";
+import { canonicalUrl } from "@/lib/seo";
 import { directorySearchSchema } from "@/lib/validation/search";
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -22,6 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description:
       category.description ??
       `Info AI gratis & murah kategori ${category.name} yang telah diverifikasi.`,
+    alternates: { canonical: canonicalUrl(`/kategori/${category.slug}`) },
   };
 }
 

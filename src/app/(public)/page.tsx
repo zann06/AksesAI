@@ -17,12 +17,14 @@ import { clientEnv } from "@/lib/env";
 import { serializeJsonLd } from "@/lib/security/json-ld";
 import { APP_NAME, DEFAULT_DISCLAIMER_TEXT } from "@/lib/constants/labels";
 import { getDirectoryStats, getTopContributors, TOP_CONTRIBUTORS_LIMIT } from "@/lib/programs/seo";
+import { canonicalUrl } from "@/lib/seo";
 import Image from "next/image";
 
 export const metadata = {
   title: "Temukan info AI gratis & murah yang bersumber jelas",
   description:
     "AksesAI adalah direktori info AI gratis dan murah dari kontribusi komunitas: API/token gratis, free tier, harga per token, model open-weight, tool gratis, dan hosting gratis. Setiap info menyertakan sumber resmi yang diperiksa reviewer.",
+  alternates: { canonical: canonicalUrl("/") },
 };
 
 const STEPS = [

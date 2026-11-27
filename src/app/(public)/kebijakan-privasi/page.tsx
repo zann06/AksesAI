@@ -1,10 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { canonicalUrl } from "@/lib/seo";
+
 export const metadata: Metadata = {
   title: "Kebijakan Privasi",
   description:
     "Data apa yang disimpan AksesAI, tujuannya, pihak ketiga yang digunakan, masa retensi, dan cara menghubungi kami.",
+  alternates: { canonical: canonicalUrl("/kebijakan-privasi") },
 };
 
 export default function PrivacyPage() {

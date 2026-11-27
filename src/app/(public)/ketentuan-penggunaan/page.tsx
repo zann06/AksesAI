@@ -1,10 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { canonicalUrl } from "@/lib/seo";
+
 export const metadata: Metadata = {
   title: "Ketentuan Penggunaan",
   description:
     "Ketentuan penggunaan AksesAI: layanan, akun & kontribusi, larangan, moderasi, hak konten, dan perubahan ketentuan.",
+  alternates: { canonical: canonicalUrl("/ketentuan-penggunaan") },
 };
 
 export default function TermsPage() {
